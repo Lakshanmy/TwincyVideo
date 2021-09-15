@@ -78,11 +78,11 @@ async def startvideo(client, m: Message):
             [
                 [
                     InlineKeyboardButton(
-                        text="✨ ɢʀᴏᴜᴘ",
-                        url="https://t.me/VeezSupportGroup"),
+                        text="💬 Support 💬",
+                        url="https://t.me/unlimitedworld_TM_group"),
                     InlineKeyboardButton(
-                        text="🌻 ᴄʜᴀɴɴᴇʟ",
-                        url="https://t.me/levinachannel")
+                        text="🔔 Updates 🔔",
+                        url="https://t.me/unlimitedworld_TM_channel")
                 ]
             ]
         )
@@ -90,7 +90,7 @@ async def startvideo(client, m: Message):
     replied = m.reply_to_message
     if not replied:
         if len(m.command) < 2:
-            await m.reply("💡 **reply to video or provide youtube/live video url to start video streaming**")
+            await m.reply("**❌ reply to video or provide youtube/live video url to start video streaming**")
         else:
             livelink = m.text.split(None, 1)[1]
             chat_id = m.chat.id
@@ -110,7 +110,7 @@ async def startvideo(client, m: Message):
                 return
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             FFMPEG_PROCESS[chat_id] = process
-            msg = await m.reply("🔁 **starting video streaming...**")
+            msg = await m.reply("**🔄 starting video streaming...**")
             await asyncio.sleep(10)
             try:
                 audio_file = f'audio{chat_id}.raw'
@@ -137,19 +137,19 @@ async def startvideo(client, m: Message):
                     stream_type=StreamType().local_stream,
                 )
                 await m.reply_photo(
-                    photo="https://telegra.ph/file/422650a849a8d6831bde8.png",
+                    photo="https://telegra.ph/file/4d9b3f49e8a15eba62294.jpg",
                     reply_markup=keyboard,
-                    caption=f"💡 **video streaming started!**\n\n🏷 **Name:** {title}\n⏱ **Duration:** `{convert_seconds(duration)}`\n\n» **join to video chat on the top to watch the video.**")
+                    caption=f"**🌷 video streaming started!**\n\n**🌷 Title :** {title}\n**🌷 Duration :** `{convert_seconds(duration)}`\n\n» **join to video chat on the top to watch the video.**")
                 return await msg.delete()
                 await idle()
             except Exception as e:
                 await msg.edit(f"🚫 **error** | `{e}`")
    
     elif replied.video or replied.document:
-        msg = await m.reply("📥 downloading video...")
+        msg = await m.reply("**📥 downloading video...**")
         video = await client.download_media(m.reply_to_message)
         chat_id = m.chat.id
-        await msg.edit("🔁 **preparing video...**")
+        await msg.edit("**🔄 Processing video...**")
         os.system(f"ffmpeg -i '{video}' -f s16le -ac 1 -ar 48000 'audio{chat_id}.raw' -y -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:360 'video{chat_id}.raw' -y")
         try:
             audio_file = f'audio{chat_id}.raw'
@@ -178,13 +178,13 @@ async def startvideo(client, m: Message):
             await m.reply_photo(
                 photo="https://telegra.ph/file/dc90e91cc77e68568e7b4.png",
                 reply_markup=keyboard,
-                caption=f"💡 **video streaming started !**\n\n» **join to video chat on the top to watch the video.**")
+                caption=f"**🌷 video streaming started !**\n\n» **join to video chat on the top to watch the video.**")
             return await msg.delete()
         except Exception as e:
             await msg.edit(f"🚫 **error** | `{e}`")
             await idle()
     else:
-        await m.reply("💭 please reply to video or video file to stream")
+        await m.reply("**❌ please reply to video or video file to stream.**")
 
 
 @Client.on_message(command(["vstop", f"vstop@{Veez.BOT_USERNAME}"]) & filters.group & ~filters.edited)
@@ -201,7 +201,7 @@ async def stopvideo(client, m: Message):
                 print(e)
                 pass
         await call_py.leave_group_call(chat_id)
-        await m.reply("✅ **successfully left vc !**")
+        await m.reply("**✅ successfully left vc !**")
     except Exception as e:
         await m.reply(f"🚫 **error** | `{e}`")
 
@@ -217,7 +217,7 @@ async def chstream(client, m: Message):
     replied = m.reply_to_message
     if not replied:
         if len(m.command) < 2:
-            await m.reply("💡 **reply to video or provide youtube/live video url to start video streaming**")
+            await m.reply("**❗ reply to video or provide youtube/live video url to start video streaming**")
         else:
             livelink = m.text.split(None, 1)[1]
             chat_id = Veez.CHANNEL
@@ -237,7 +237,7 @@ async def chstream(client, m: Message):
                 return
             process = raw_converter(livelink, f'audio{chat_id}.raw', f'video{chat_id}.raw')
             FFMPEG_PROCESS[chat_id] = process
-            msg = await m.reply("🔁 **starting video streaming...**")
+            msg = await m.reply("**🌷 starting video streaming...**")
             await asyncio.sleep(10)
             try:
                 audio_file = f'audio{chat_id}.raw'
@@ -263,16 +263,16 @@ async def chstream(client, m: Message):
                     ),
                     stream_type=StreamType().local_stream,
                 )
-                await msg.edit("💡 **video streaming channel started !**")
+                await msg.edit("**🌷 video streaming channel started !**")
                 await idle()
             except Exception as e:
                 await msg.edit(f"🚫 **error** - `{e}`")
    
     elif replied.video or replied.document:
-        msg = await m.reply("📥 **downloading video...**")
+        msg = await m.reply("**📥 downloading video...**")
         video = await client.download_media(m.reply_to_message)
         chat_id = Veez.CHANNEL
-        await msg.edit("🔁 **preparing video...**")
+        await msg.edit("**🔄 processing video...**")
         os.system(f"ffmpeg -i '{video}' -f s16le -ac 1 -ar 48000 'audio{chat_id}.raw' -y -f rawvideo -r 20 -pix_fmt yuv420p -vf scale=640:360 'video{chat_id}.raw' -y")
         try:
             audio_file = f'audio{chat_id}.raw'
@@ -298,7 +298,7 @@ async def chstream(client, m: Message):
                 ),
                 stream_type=StreamType().local_stream,
             )
-            await msg.edit("💡 **video streaming channel started !**")
+            await msg.edit("**🌷 video streaming channel started !**")
         except Exception as e:
             await msg.edit(f"🚫 **error** - `{e}`")
             await idle()
