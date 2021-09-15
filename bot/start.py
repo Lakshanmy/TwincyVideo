@@ -31,7 +31,7 @@ async def _human_time_duration(seconds):
     return ', '.join(parts)
 
 
-@Client.on_message(command(["start", f"start@{Veez.BOT_USERNAME}"]))
+@Client.on_message(command(["vs", f"vs@{Veez.BOT_USERNAME}"]))
 async def start(_, m: Message):
     if m.chat.type == "private":
         await m.reply_text(
@@ -77,7 +77,7 @@ async def start(_, m: Message):
                            )
 
 
-@Client.on_message(command(["alive", f"alive@{Veez.BOT_USERNAME}"]) & filters.group & ~filters.edited)
+@Client.on_message(command(["a", f"alive@{Veez.BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def alive(_, m: Message):
     current_time = datetime.utcnow()
     uptime_sec = (current_time - START_TIME).total_seconds()
